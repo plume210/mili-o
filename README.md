@@ -3,6 +3,11 @@ Github repo for paper: LlamaPIE: Proactive In-Ear  Conversation  Assistants
 
 
 # Inference
+## run inference on synthetic dataset
+```
+python text_pipeline.py
+```
+
 
 # Training
 ## train the small model
