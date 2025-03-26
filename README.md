@@ -30,8 +30,6 @@ git clone https://github.com/chentuochao/LlamaPIE.git
 conda create -n llamapie python=3.9
 pip install -r requirement.txt
 ```
-## Dataset preparation
-Training/Val dataset and Test dataset
 
 # 📊 Inference
 
@@ -43,6 +41,7 @@ To run our Ll on a single conversation sample, create a folder <INPUT_FOLDER> an
 (1) dialogue.txt: store the dialogue. In the dialogue, Here is a example of dialogue. Each turn start with "User: " or "Speaker*: ". We also have a special token " |SILENCE >" to represent the 0.5s second silence in the spoken dialogue.
 <details>
 <summary>One dialogue example</summary>
+
 ```
 Speaker1:  So, how are you doing? User: I'm pretty good. |SILENCE > |SILENCE > Doing well. |SILENCE > |SILENCE > |SILENCE > Speaker1: So, please tell me about yourself. |SILENCE > |SILENCE > Okay. |SILENCE > |SILENCE > |SILENCE > User: So, I guess... Have you looked at my resume, or should I? Alright. So, I guess I'm a course 6-7 here at MIT, which is computational biology. So, it's a mix of computer science and biology. And actually, that's where my interests lie, in applying, like, algorithmic kind of software engineering to data sets, dealing with genomics and biology. |SILENCE > |SILENCE > Some of the activities to do outside of school include Camp Kesem, which is a summer camp that we run for completely free for kids whose parents have cancer, as well as Amphibious Achievement, which is a high school tutoring program for inner-city kids in Boston. |SILENCE > |SILENCE > |SILENCE > So, |SILENCE > |SILENCE > my interests kind of lie both in a little bit of the healthcare. I imagined I was going to be a doctor growing up, and then I came to MIT, and I'm like, well, I can do engineering and still apply a lot of these same things and help a lot more people. |SILENCE > |SILENCE > |SILENCE > |SILENCE > Speaker1: So, please tell me about a time you demonstrated leadership. |SILENCE > |SILENCE > Okay. |SILENCE > |SILENCE > User: One of the things that we have to do for Camp Kesem is fundraise all the money to |SILENCE > |SILENCE > run the camp, which is over $50,000. |SILENCE > |SILENCE > And so, one of the things that I individually spearhead every year is called the Camp Kesem SAE Data Auction, where actually my fraternity and I go out and solicit |SILENCE > |SILENCE > |SILENCE > donations in the form of gift cards to raise money for a data auction where we actually sell dates. And then we use this money, obviously, and we donate it to Camp Kesem. So, I spearhead the entire event, and I kind of organize it into committees and groups, and I send the people out and make sure everything |SILENCE > |SILENCE > goes according to plan. |SILENCE > |SILENCE > Speaker1: Tell me about a time when you were working on a team and faced with a challenge. How did you solve that problem? |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > User: I guess the easiest team project I just had was |SILENCE > |SILENCE > last semester, I worked on a 6.005 project, which is software architecture. |SILENCE > |SILENCE > And we were put in a group of three people, and it was the standard, you know, we signed the contract, everyone's supposed to work equally, but it ended up being by the end of it that someone didn't put their fair share of work in. |SILENCE > |SILENCE > |SILENCE > Essentially, we talked to them, we didn't really get it out, and we actually had to go to some of the TAs. We got a little bit... |SILENCE > |SILENCE > And that kind of pushed them forward. So, I mean, I guess what I'm showing is I'm not afraid to go to the right methods. Authority weren't cases where the situation presents itself. Speaker1: Oh, yes. |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > Tell me about one of your weaknesses, and how you plan to overcome it. |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > User: Um... |SILENCE > |SILENCE > |SILENCE > I would say, for this job, I'm a little bit technically underprepared. |SILENCE > |SILENCE > |SILENCE > I've only taken the introductory software classes so far, as well as introductory bio classes. |SILENCE > |SILENCE > But I think, just from sheer interest and sheer effort, I'll be able to overcome these obstacles. |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > Speaker1: Now, why do you think we should hire you? |SILENCE > |SILENCE > |SILENCE > User: I'm very interested in the subject of computational biology, and I think that I'll be able to contribute a lot to this field. I've had a good amount of experience, and I think I'll be a solid intern. |SILENCE > |SILENCE > |SILENCE > |SILENCE > |SILENCE > Speaker1: Well, thank you.
 ```
@@ -57,7 +56,11 @@ python infer_dual_model.py --input-path <INPUT_FOLDER> --save-path <SAVE_FOLDER>
 ```
 
 
-## Run inference on dataset
+## Run evaluation on dataset
+### Dataset prepare
+Untar the [dataset](https://drive.google.com/file/d/1TEquHZR8E53WLR-v09F1Do5UMQH5tjYZ/view?usp=share_link) to a path and change the corresponding path in infer_dual_model.py.
+
+### Run inference
 In our evaluation, the <DATASET_NAME> have 4 options: 
 * Sync_claude: synthetic conversation generated from Claude,  
 * Sync_perl: synthetic conversation from [PerLTQA](https://github.com/Elvin-Yiming-Du/PerLTQA) dataset, 
@@ -66,7 +69,7 @@ In our evaluation, the <DATASET_NAME> have 4 options:
 ```
 python infer_dual_model.py --dataset <DATASET_NAME> --save-path <SAVE_FOLDER>
 ```
-## Rubric Score evaluation
+### Rubric Score evaluation
 We use ChatGPT-4o as our rubric score evaluator, the eval prompting and scripts is as follow:
 ```
 python infer_dual_model.py
@@ -74,11 +77,15 @@ python infer_dual_model.py
 
 # 🏋️‍♂️ Training
 ## Train the small model
+Untar the [dataset](https://drive.google.com/file/d/1TEquHZR8E53WLR-v09F1Do5UMQH5tjYZ/view?usp=share_link) to a path and change the corresponding path in train_small.py.
+
 ```
-python train_small.py --save_path /gscratch/intelligentsystems/tuochao/Proactive_Agent/experiment/classifier_4data_whisper_aware
+python train_small.py --save_path <CHECKPOINT_PATH>
 ```
 
 ## Train the large model
+Untar the [dataset0](https://drive.google.com/file/d/1b20_MzkeOO3KXA6agY36VbyAhdO1rmU0/view?usp=share_link) and [dataset1](https://drive.google.com/file/d/1ChDTvrcBLngd4yNFc54oiQHwSwNdxsxu/view?usp=share_link)  to a path and change the corresponding path in train_large.py.
+
 ```
-python train_large.py --model llama3_1-8b --data_path /scr/Final_Generation/Pos_Neg/ --save_path /gscratch/intelligentsystems/tuochao/Proactive_Agent/experiment/generator_3data
-```
+python train_large.py --model llama3_1-8b --save_path <CHECKPOINT_PATH>
+```         

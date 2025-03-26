@@ -267,3 +267,92 @@ class MIT_sample(object):
         return input_ids
 
 
+class OneSample(object):
+    def __init__(
+        self, 
+        tokenizer: PreTrainedTokenizer,
+        gen_tokenizer: PreTrainedTokenizer,
+        conversation_folder: str,
+    ):
+        self.tokenizer = tokenizer
+        self.gen_tokenizer = gen_tokenizer
+
+        sample = conversation_folder
+        ### reading the dialogue, label and whisper from disk
+        self.dialogue_text = ""
+        self.memory_text = ""
+        self.dialogue_text = (Path(sample) / 'dialogue.txt').read_text()
+        mem_file = Path(sample) / 'memory.txt'
+        if os.path.exists(mem_file):
+            self.memory_text = mem_file.read_text()
+
+        # create stream for speech 
+        self.tokenized_dialogue = self.tokenizer.encode(self.dialogue_text, return_tensors='pt')[0]
+        self.tokenized_dialogue_history = self.tokenized_dialogue.clone()
+
+        self.stream_id = START_INDEX
+        self.stream_id_history = START_INDEX
+
+        symbol_token = self.tokenizer(" >")['input_ids'][-1]
+        masks = []
+        for _i in range(self.tokenized_dialogue.shape[-1]):
+            token = self.tokenized_dialogue[_i].item()
+            if token == symbol_token:
+                masks.append(1)
+            else:
+                masks.append(0)
+        masks = torch.tensor(masks, dtype=torch.int)
+        self.mask = masks
+        self.mask_history = self.mask.clone()
+
+        assert(self.tokenized_dialogue.size() == self.mask.size())
+        assert(self.tokenized_dialogue_history.size() == self.mask_history.size())
+
+    def count_turn(self):
+        return self.dialogue_text.count("User:") + sum([self.dialogue_text.count(f"Speaker {n}:") + self.dialogue_text.count(f"Speaker{n}:") for n in range(1,6)])
+    
+    def reset_streaming(self):
+        self.stream_id = START_INDEX 
+        self.stream_id_history = START_INDEX
+
+    def insert_whisper(self, whisper_text):
+        whisper_token = self.tokenizer.encode(whisper_text, return_tensors='pt', add_special_tokens = False)[0]
+        L_whisper = whisper_token.shape[-1]
+        whisper_mask = torch.zeros_like(whisper_token)
+
+        self.tokenized_dialogue_history = torch.cat([self.tokenized_dialogue_history[:self.stream_id_history], whisper_token, self.tokenized_dialogue_history[self.stream_id_history:]]  )
+        self.mask_history = torch.cat([self.mask_history[:self.stream_id_history], whisper_mask, self.mask_history[self.stream_id_history:]]  )
+
+        assert(self.tokenized_dialogue_history.size() == self.mask_history.size())
+
+        self.stream_id_history += L_whisper
+
+    def streaming_diaglogue(self):
+        if self.stream_id < len(self.tokenized_dialogue) and self.stream_id_history < len(self.tokenized_dialogue_history):
+            curr_token = self.tokenized_dialogue[:1+self.stream_id]
+            curr_token_history = self.tokenized_dialogue_history[:1+self.stream_id_history]
+            curr_mask = self.mask[:1+self.stream_id]
+            curr_mask_history = self.mask_history[:1+self.stream_id_history]
+            self.stream_id += 1
+            self.stream_id_history += 1
+            return curr_token, curr_token_history, curr_mask, curr_mask_history
+        else:
+            return None 
+        
+
+    def snap_dialogue(self):
+        return self.tokenized_dialogue, self.tokenized_dialogue_history
+    
+    
+    def get_gen_inputs(self, curr_diag, old=False):
+        ## prepare conversation template
+        messages = [
+            {"role": "system", "content": "You are a proactive AI agent designed to actively help humans by reminding and assisting them in following dialogue, by whispering short, concise phrases (1-3 words) to its user."},
+            {'role': 'user', 'content': f'You have the following memory of facts for the user:\n{self.memory_text}'},
+            {"role": "user", "content": curr_diag},
+        ]
+        conv_text = self.gen_tokenizer.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
+        # tokenize the dialogue
+        input_ids = self.gen_tokenizer.encode(conv_text, return_tensors='pt')[0] #self.tokenize_dialogue_label(conv_text)
+
+        return input_ids

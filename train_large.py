@@ -13,27 +13,14 @@ from transformers import AutoModelForCausalLM, TrainingArguments, Trainer, EvalP
 from sklearn.metrics import accuracy_score
 from mydatasets.collator import DataCollatorForCompletionOnlyLM
 import argparse
-
 import re
-#### 
-'''
-train script
-python train_llama_generation.py --model llama3_1-8b --data_path /gscratch/intelligentsystems/common_datasets/active_agent/Reformatted/Generation --save_path /gscratch/intelligentsystems/tuochao/Proactive_Agent/experiment/llama3_1_mem
 
-new dataset
-python train_llama_generation.py --model llama3_1-8b --data_path /scr/Final_Generation/Pos_Neg/ --save_path /gscratch/intelligentsystems/tuochao/Proactive_Agent/experiment/generator_3data
-
-'''
 
 parser = argparse.ArgumentParser()
 # Experiment Params
 parser.add_argument('--model', type=str,
                     default='llama3-8b',
                     help='name of llm [llama3-8b, llama3_1-8b, llama3_2-1b]')
-
-parser.add_argument('--data_path', type=str,
-                    help='Path to load dataset')
-
 parser.add_argument('--save_path', type=str,
                     help='Path to save model')
 
@@ -51,6 +38,7 @@ elif args.model == "llama3_2-1b":
     model_cache = "/gscratch/intelligentsystems/tuochao/Large_Model/llama3_2_1b"
 else:
     raise ValueError(f"model id {model_id} not support")
+
 ### loading the tokenizer
 tokenizer = AutoTokenizer.from_pretrained(
     model_id,
@@ -71,11 +59,12 @@ print(f'model {args.model} loaded!')
 dataset = None
 dataset_val = None
 
+### change the dataset path based on your file systems
 dataset_names = [
-    "/scr/Final_Generation/Pos_Neg/perl/",
-    "/scr/Final_Generation/Pos_Neg/soda/",
-    "/scr/Final_Generation/Pos_Neg/synthetic/",
-    "/scr/Generation/Pos_Neg/"
+    "XXX/Final_Generation/Pos_Neg/perl/",
+    "XXX/Final_Generation/Pos_Neg/soda/",
+    "XXX/Final_Generation/Pos_Neg/synthetic/",
+    "XXX/Generation/Pos_Neg/"
 ]
 
 dataset_prob = [
@@ -86,15 +75,16 @@ dataset_prob = [
 ]
 
 
-aug_config = {
-    "adapt_to_ASR": 1,
-    "drop_word": 0.75,
-    "swap_silence_speaker": 0.3
-}
+# aug_config = {
+#     "adapt_to_ASR": 1,
+#     "drop_word": 0.75,
+#     "swap_silence_speaker": 0.3
+# }
+aug_config = None
+neg_prob = 0.25
 
-
-dataset = Gen_dataset_New(tokenizer, dataset_names =dataset_names, dataset_probs = dataset_prob, split_set="Train", mem_drop_rate = 0.15, neg_prob = 0.2, history_aware = True)
-dataset_val = Gen_dataset_New(tokenizer, dataset_names=dataset_names, dataset_probs = dataset_prob, split_set="Val", mem_drop_rate = 0, neg_prob = 0.2, history_aware = True)
+dataset = Gen_dataset_New(tokenizer, dataset_names =dataset_names, dataset_probs = dataset_prob, split_set="Train", mem_drop_rate = 0.15, neg_prob = neg_prob, history_aware = True)
+dataset_val = Gen_dataset_New(tokenizer, dataset_names=dataset_names, dataset_probs = dataset_prob, split_set="Val", mem_drop_rate = 0, neg_prob = neg_prob, history_aware = True)
 print(f"Trainig dataset = {len(dataset)} and val set = {len(dataset_val)}")
 
 config = LoraConfig(
@@ -110,7 +100,7 @@ model = get_peft_model(model, config)
 model.print_trainable_parameters()
 
 training_args = TrainingArguments(
-    output_dir = args.save_path, #f"/gscratch/intelligentsystems/tuochao/Proactive_Agent/experiment/Llama3_gen",
+    output_dir = args.save_path, 
     eval_strategy="steps",
     per_device_train_batch_size=4,
     per_device_eval_batch_size=4,
@@ -136,7 +126,6 @@ def compute_metrics(pred: EvalPrediction, compute_result: bool):
     flattened_preds = flattened_preds[valid_indices]
     flattened_labels = flattened_labels[valid_indices]
     accuracy = accuracy_score(flattened_labels, flattened_preds)
-    # print('accuracy', accuracy)
     return {'accuracy': accuracy}
 
 
