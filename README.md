@@ -10,7 +10,9 @@
 <p>
 
 ## 💡 Highlight
-* 1
+* In-ear AI system could **proactively** assist users' vocal conversation without explicit invocation
+* Proactively determining when to provide assistance and delivering concise, unobtrusive messages, e.g. reminding, guidance, and support.
+* Streaming and realtime operation in MLX framework in Apple Silicon
 
 ## 📑 Open-source Plan
 
