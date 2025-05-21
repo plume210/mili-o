@@ -1,12 +1,13 @@
 from transformers.models.llama.modeling_llama import *
-import math
 from typing import List, Optional, Tuple, Union
 
 import torch
-import torch.nn.functional as F
-import torch.utils.checkpoint
 from torch import nn
-from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
+from torch.nn import CrossEntropyLoss
+from transformers import LlamaPreTrainedModel
+from transformers.modeling_outputs import CausalLMOutputWithPast
+from transformers.utils import add_start_docstrings_to_model_forward, replace_return_docstrings
+from cache import Cache
 
 _CONFIG_FOR_DOC = "LlamaConfig"
 
@@ -44,7 +45,6 @@ class LlamaForCausalLM_TokenClassifcation(LlamaPreTrainedModel):
     def get_decoder(self):
         return self.model
     
-    @add_start_docstrings_to_model_forward(LLAMA_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=CausalLMOutputWithPast, config_class=_CONFIG_FOR_DOC)
     def forward(
         self,

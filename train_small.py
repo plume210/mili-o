@@ -9,18 +9,18 @@ os.environ["WANDB_DISABLED"] = "true"
 os.environ['HF_DATASETS_CACHE'] = '/scr/data'
 import torch
 from transformers import AutoTokenizer, DataCollatorForTokenClassification
-from transformers import AutoModelForCausalLM, TrainingArguments, Trainer, EvalPrediction
+from transformers import TrainingArguments, Trainer, EvalPrediction
 from model.CasualTokenClassificationLlama import LlamaForCausalLM_TokenClassifcation
 from sklearn.metrics import accuracy_score
 from mydatasets.Active_dataset import New_WhisperAware_dataset
-
+import argparse
 model_id = "meta-llama/Llama-3.2-1B-Instruct" 
+
+torch.cuda.empty_cache()
 ### loading the tokenizer
 tokenizer = AutoTokenizer.from_pretrained(
     model_id,
-    cache_dir = "xxx",
     pad_token="<|eot_id|>",
-    token = "xxx"
     )
 
 tokenizer.pad_token = tokenizer.eos_token
@@ -28,28 +28,26 @@ model = LlamaForCausalLM_TokenClassifcation.from_pretrained(
     model_id,
     device_map='cuda', 
     torch_dtype=torch.bfloat16, 
-    num_labels = 2,
-    cache_dir = "xxx",
-    token = "xxx")
+    num_labels = 2,)
 
 ### change the dataset path based on your file systems
 positive_base_train = [
-    "XXX/synthetic0/Train/claude",
-    "XXX/perl/Train/claude",
-    "XXX/soda/Train/claude",
-    "XXX/synthetic/Train/claude",
+    "data/synthetic0/Train/claude",
+    "data/perl/Train/claude",
+    "data/soda/Train/claude",
+    "data/synthetic/Train/claude",
 ]
 positive_base_dev = [
-    "XXX/synthetic0/Val/claude",
-    "XXX/perl/Val/claude",
-    "XXX/soda/Val/claude",
-    "XXX/synthetic/Val/claude",
+    "data/synthetic0/Val/claude",
+    "data/perl/Val/claude",
+    "data/soda/Val/claude",
+    "data/synthetic/Val/claude",
 ]
 
 parser = argparse.ArgumentParser()
 # Experiment Params
 parser.add_argument('--save_path', type=str,
-                    help='Path to save model')
+                    help='Path to save model', required=True)
 
 args = parser.parse_args()
 
@@ -82,7 +80,7 @@ model.print_trainable_parameters()
 training_args = TrainingArguments(
     output_dir=save_dir,
     eval_strategy="steps",
-    per_device_train_batch_size=8,
+    per_device_train_batch_size=4,
     per_device_eval_batch_size=8,
     learning_rate=2e-5,
     weight_decay=0.01,

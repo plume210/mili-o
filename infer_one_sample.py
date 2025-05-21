@@ -20,7 +20,7 @@ os.environ["WANDB_DISABLED"] = "true"
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--input-path', type=str, help="path to load conversation")
-parser.add_argument('--save-path', type=str, help="path to save result")
+parser.add_argument('--save-path', type=str, help="path to save result", required=True)
 
 args = parser.parse_args()
 
@@ -35,8 +35,6 @@ generator_aware = True
 tokenizer_small = AutoTokenizer.from_pretrained(
     "tuochao/Llama-3.2-1B-Proactive-Small-Peft",
     pad_token="<|eot_id|>",
-    cache_dir = "/scr/tuochao/",
-    token = "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"
     )
 tokenizer_small.pad_token = tokenizer_small.eos_token
 model_small = LlamaForCausalLM_TokenClassifcation.from_pretrained(
@@ -44,14 +42,11 @@ model_small = LlamaForCausalLM_TokenClassifcation.from_pretrained(
     device_map='cuda', 
     torch_dtype=torch.bfloat16, 
     num_labels = 2,
-    cache_dir = "/scr/tuochao/",
-    token = "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")
+)
 
 tokenizer_big = AutoTokenizer.from_pretrained(
     "tuochao/Llama-3.1-8B-Proactive-Big-Peft",
     pad_token="<|eot_id|>",
-    cache_dir = "/scr/tuochao/",
-    token = "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",
     )
 
 ### load weight for big model
@@ -60,8 +55,7 @@ model_big = AutoModelForCausalLM.from_pretrained(
     "tuochao/Llama-3.1-8B-Proactive-Big-Peft",
     device_map='cuda', 
     torch_dtype=torch.bfloat16, 
-    cache_dir = "/scr/tuochao/",
-    token = "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")
+)
 
 terminators = [
     tokenizer_big.eos_token_id,

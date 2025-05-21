@@ -20,10 +20,11 @@ import argparse
 # os.environ["HF_HUB_CACHE"] =  "/scr/tuochao"
 # os.environ["HF_DATASETS_CACHE"]=  "/scr/tuochao"
 
+device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, choices= ['MIT', 'Sync_claude', 'Sync_perl', 'Sync_soda'], default='Sync_claude')
-parser.add_argument('--save-path', type=str, help="path to save result")
+parser.add_argument('--save-path', type=str, help="path to save result", required=True)
 
 args = parser.parse_args()
 
@@ -33,19 +34,19 @@ os.makedirs(output_samples, exist_ok = True)
 
 if dataset_name == "MIT":
     from mydatasets.Pipeline_dataset import MIT_sample  as  SingleSample
-    output_base = 'XXX/MIT_final/'
+    output_base = 'data/MIT_final/'
     input_dirs = []
 elif dataset_name == "Sync_claude":
     from mydatasets.Pipeline_dataset import Syn_samples  as  SingleSample
-    output_base =  "XXX/synthetic/Test/claude"
+    output_base =  "data/synthetic/Test/claude"
     input_dirs = []
 elif dataset_name == "Sync_perl":
     from mydatasets.Pipeline_dataset import Syn_samples  as  SingleSample
-    output_base =  "XXX/perl/Test/claude"
+    output_base =  "data/perl/Test/claude"
     input_dirs = []
 elif dataset_name == "Sync_soda":
     from mydatasets.Pipeline_dataset import Syn_samples  as  SingleSample
-    output_base =  "XXX/soda/Test/claude"
+    output_base =  "data/soda/Test/claude"
     input_dirs = []
 else:
     raise ValueError("dataset not supported!") 
@@ -59,33 +60,31 @@ generator_aware = True
 tokenizer_small = AutoTokenizer.from_pretrained(
     "tuochao/Llama-3.2-1B-Proactive-Small-Peft",
     pad_token="<|eot_id|>",
-    cache_dir = "xxx",
-    token = "xxx"
+    device_map=device,
+    # cache_dir = "xxx",
+    # token = "xxx"
     )
 tokenizer_small.pad_token = tokenizer_small.eos_token
 model_small = LlamaForCausalLM_TokenClassifcation.from_pretrained(
     "tuochao/Llama-3.2-1B-Proactive-Small-Peft",
-    device_map='cuda', 
+    device_map=device, 
     torch_dtype=torch.bfloat16, 
     num_labels = 2,
-    cache_dir = "xxx",
-    token = "xxx")
+    )
 
 tokenizer_big = AutoTokenizer.from_pretrained(
     "tuochao/Llama-3.1-8B-Proactive-Big-Peft",
     pad_token="<|eot_id|>",
-    cache_dir = "xxx",
-    token = "xxx",
+    device_map=device,
     )
 
 ### load weight for big model
 tokenizer_big.pad_token = tokenizer_big.eos_token
 model_big = AutoModelForCausalLM.from_pretrained(
     "tuochao/Llama-3.1-8B-Proactive-Big-Peft",
-    device_map='cuda', 
+    device_map=device, 
     torch_dtype=torch.bfloat16, 
-    cache_dir = "/scr/tuochao/",
-    token = "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")
+)
 
 terminators = [
     tokenizer_big.eos_token_id,
@@ -375,7 +374,6 @@ overall_data = {
     'num_resps': getStats(num_resps),
     'speaker_num_turns': getStats(total_num_turns),
     'num_spoken': getStats(total_num_spoken)
-
 }
 if "Sync" in dataset_name:
     accuracy = (TP + TN) / (TP + TN + FP + FN)

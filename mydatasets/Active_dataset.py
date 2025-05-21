@@ -62,6 +62,10 @@ class New_WhisperAware_dataset(Dataset):
             #     self.datasets[f'{dataset_name}_negative'] = elements
             # else:
             self.datasets[dataset_name] = elements
+            print(f"Loaded {dataset_name} with {elements['len']} samples")
+        print(f"Loaded {len(self.datasets)} datasets with {self.sample_size} samples")
+        print(f"example: {self.datasets[dataset_name]}")
+        # print(f"Dataset names: {self.datasets.keys()}")
 
     # tokenizes a string - joins all lines if they aren't joined already
     # returns as a pytorch tensor
