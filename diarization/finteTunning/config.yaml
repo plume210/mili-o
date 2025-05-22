@@ -1,0 +1,14 @@
+task: SpeakerDiarization
+protocol: MyDataset.SpeakerDiarization
+model: pyannote/segmentation
+hydra:
+  version_base: "1.1"
+  
+trainer:
+  batch_size: 32
+  learning_rate: 1e-4
+  max_epochs: 20
+  gpu: 0
+
+preprocessors:
+  audio: !<Pretrained> {name: pyannote/embedding, use_auth_token: yes}

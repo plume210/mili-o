@@ -1,0 +1,70 @@
+SPEAKER dialogue1 1 1.00 1.23 <NA> <NA> ('spk4', 'en', 'That’s interesting.') <NA> <NA>
+SPEAKER dialogue1 1 2.23 2.62 <NA> <NA> ('spk1', 'fr', 'Euh... attends une seconde.') <NA> <NA>
+SPEAKER dialogue1 1 4.85 14.88 <NA> <NA> ('spk3', 'fr', 'J’ai pris un moment pour relire les consignes, et franchement, il y a pas mal de zones d’ombre. Je pense qu’on gagnerait à poser quelques questions directement au client, histoire d’éviter les malentendus. Je vais les lister et les envoyer cet après-midi.') <NA> <NA>
+SPEAKER dialogue1 1 19.73 2.12 <NA> <NA> ('spk2', 'en', "I'm not sure I follow.") <NA> <NA>
+SPEAKER dialogue1 1 21.85 3.30 <NA> <NA> ('spk1', 'fr', 'On peut en discuter après la réunion.') <NA> <NA>
+SPEAKER dialogue1 1 25.15 2.10 <NA> <NA> ('spk3', 'fr', 'On doit revoir nos priorités.') <NA> <NA>
+SPEAKER dialogue1 1 27.25 1.88 <NA> <NA> ('spk2', 'en', "That's interesting.") <NA> <NA>
+SPEAKER dialogue1 1 29.13 1.52 <NA> <NA> ('spk4', 'en', 'We should take a step back.') <NA> <NA>
+SPEAKER dialogue1 1 30.65 1.32 <NA> <NA> ('spk4', 'en', 'Let’s wrap this up.') <NA> <NA>
+SPEAKER dialogue1 1 31.98 2.33 <NA> <NA> ('spk1', 'fr', "Ah d'accord, je vois.") <NA> <NA>
+SPEAKER dialogue1 1 34.30 2.02 <NA> <NA> ('spk4', 'en', 'Can you send me the updated report?') <NA> <NA>
+SPEAKER dialogue1 1 36.33 2.30 <NA> <NA> ('spk2', 'en', 'Did you finish the report?') <NA> <NA>
+SPEAKER dialogue1 1 38.62 1.52 <NA> <NA> ('spk3', 'fr', "C'est noté.") <NA> <NA>
+SPEAKER dialogue1 1 40.15 18.10 <NA> <NA> ('spk2', 'en', 'So basically, I went over the analytics again this morning and noticed a consistent drop in user engagement after the onboarding sequence. It could be due to poor UX, but it might also be linked to the lack of follow-up notifications. I’ve listed a few hypotheses we could test in the next sprint.') <NA> <NA>
+SPEAKER dialogue1 1 58.25 2.40 <NA> <NA> ('spk3', 'fr', 'Je ne suis pas dispo tout de suite.') <NA> <NA>
+SPEAKER dialogue1 1 60.65 1.38 <NA> <NA> ('spk4', 'en', 'I’ll write a summary.') <NA> <NA>
+SPEAKER dialogue1 1 62.02 13.25 <NA> <NA> ('spk1', 'fr', 'Alors voilà, ce matin j’ai commencé par relire le compte rendu de la réunion d’hier, puis j’ai tenté de clarifier les points de blocage pour l’équipe. J’ai rédigé une synthèse que je t’ai envoyée par mail. Si tu peux y jeter un œil, ce serait top.') <NA> <NA>
+SPEAKER dialogue1 1 75.28 0.57 <NA> <NA> ('spk4', 'en', 'Huh?') <NA> <NA>
+SPEAKER dialogue1 1 75.85 0.90 <NA> <NA> ('spk4', 'en', 'All right.') <NA> <NA>
+SPEAKER dialogue1 1 76.75 3.35 <NA> <NA> ('spk1', 'fr', 'J’ai besoin de plus d’infos pour décider.') <NA> <NA>
+SPEAKER dialogue1 1 80.10 1.98 <NA> <NA> ('spk3', 'fr', 'On en reparle plus tard ?') <NA> <NA>
+SPEAKER dialogue1 1 82.08 2.08 <NA> <NA> ('spk2', 'en', "I'll keep you posted.") <NA> <NA>
+SPEAKER dialogue1 1 84.15 2.88 <NA> <NA> ('spk2', 'en', "Hey, what's the status of the project?") <NA> <NA>
+SPEAKER dialogue1 1 87.03 1.82 <NA> <NA> ('spk3', 'fr', 'Mmh-mmh.') <NA> <NA>
+SPEAKER dialogue1 1 88.85 1.85 <NA> <NA> ('spk3', 'fr', 'Je vais vérifier ça.') <NA> <NA>
+SPEAKER dialogue1 1 90.70 2.98 <NA> <NA> ('spk1', 'fr', "Il faut qu'on se parle rapidement.") <NA> <NA>
+SPEAKER dialogue1 1 93.67 2.65 <NA> <NA> ('spk3', 'fr', 'Je dois y réfléchir encore un peu.') <NA> <NA>
+SPEAKER dialogue1 1 96.33 13.12 <NA> <NA> ('spk4', 'en', 'After the last deployment, I noticed some discrepancies between staging and production. I spent the entire morning comparing logs, and I think the issue lies in how we handle config values per environment. We’ll need to patch that before the next release.') <NA> <NA>
+SPEAKER dialogue1 1 109.45 1.73 <NA> <NA> ('spk4', 'en', 'Not exactly what I meant.') <NA> <NA>
+SPEAKER dialogue1 1 111.17 2.98 <NA> <NA> ('spk1', 'fr', "Tu as vu le mail que j'ai envoyé ?") <NA> <NA>
+SPEAKER dialogue1 1 114.15 15.65 <NA> <NA> ('spk3', 'fr', 'Depuis quelques jours, j’essaie de trouver une autre façon de structurer nos livrables. L’idée serait de mieux séparer les blocs fonctionnels, pour que chaque membre de l’équipe sache exactement quoi produire et quand. Ça rendrait notre travail beaucoup plus fluide à mon avis.') <NA> <NA>
+SPEAKER dialogue1 1 129.80 2.27 <NA> <NA> ('spk4', 'en', "Let's try a different approach next time.") <NA> <NA>
+SPEAKER dialogue1 1 132.07 2.33 <NA> <NA> ('spk3', 'fr', 'Je ne suis pas sûr de la réponse.') <NA> <NA>
+SPEAKER dialogue1 1 134.40 1.45 <NA> <NA> ('spk3', 'fr', 'Ok.') <NA> <NA>
+SPEAKER dialogue1 1 135.85 1.93 <NA> <NA> ('spk2', 'en', 'Yep. No. Maybe.') <NA> <NA>
+SPEAKER dialogue1 1 137.77 0.93 <NA> <NA> ('spk4', 'en', 'Makes sense.') <NA> <NA>
+SPEAKER dialogue1 1 138.70 2.83 <NA> <NA> ('spk1', 'fr', "Peux-tu m'aider avec ce problème ?") <NA> <NA>
+SPEAKER dialogue1 1 141.52 3.17 <NA> <NA> ('spk1', 'fr', "Je suis d'accord avec toi sur ce point.") <NA> <NA>
+SPEAKER dialogue1 1 144.70 2.30 <NA> <NA> ('spk1', 'fr', 'Oui. Non. Peut-être.') <NA> <NA>
+SPEAKER dialogue1 1 147.00 2.90 <NA> <NA> ('spk2', 'en', 'I’ll be joining the call at 3pm.') <NA> <NA>
+SPEAKER dialogue1 1 149.90 2.42 <NA> <NA> ('spk2', 'en', 'We need to be more precise.') <NA> <NA>
+SPEAKER dialogue1 1 152.33 2.17 <NA> <NA> ('spk2', 'en', 'Could you clarify that?') <NA> <NA>
+SPEAKER dialogue1 1 154.50 1.62 <NA> <NA> ('spk2', 'en', 'Right. Got it.') <NA> <NA>
+SPEAKER dialogue1 1 156.13 1.98 <NA> <NA> ('spk4', 'en', 'Let’s not jump to conclusions.') <NA> <NA>
+SPEAKER dialogue1 1 158.10 2.10 <NA> <NA> ('spk1', 'fr', 'Oui, je comprends.') <NA> <NA>
+SPEAKER dialogue1 1 160.20 2.05 <NA> <NA> ('spk3', 'fr', "As-tu des nouvelles de l'équipe ?") <NA> <NA>
+SPEAKER dialogue1 1 162.25 2.83 <NA> <NA> ('spk1', 'fr', 'Tu peux répéter, s’il te plaît ?') <NA> <NA>
+SPEAKER dialogue1 1 165.08 1.93 <NA> <NA> ('spk2', 'en', 'Sounds good to me.') <NA> <NA>
+SPEAKER dialogue1 1 167.00 2.30 <NA> <NA> ('spk1', 'fr', 'Alors. Donc. Bon.') <NA> <NA>
+SPEAKER dialogue1 1 169.30 1.50 <NA> <NA> ('spk4', 'en', 'This needs more thinking.') <NA> <NA>
+SPEAKER dialogue1 1 170.80 2.02 <NA> <NA> ('spk4', 'en', "I'll check the numbers again later.") <NA> <NA>
+SPEAKER dialogue1 1 172.83 0.82 <NA> <NA> ('spk4', 'en', 'Okay.') <NA> <NA>
+SPEAKER dialogue1 1 173.65 2.40 <NA> <NA> ('spk2', 'en', "It's a bit more complicated.") <NA> <NA>
+SPEAKER dialogue1 1 176.05 1.52 <NA> <NA> ('spk4', 'en', 'Appreciate the input.') <NA> <NA>
+SPEAKER dialogue1 1 177.58 3.35 <NA> <NA> ('spk1', 'fr', "Tu veux qu'on fasse ça maintenant ou plus tard ?") <NA> <NA>
+SPEAKER dialogue1 1 180.93 2.52 <NA> <NA> ('spk1', 'fr', 'Je pense que tu as raison.') <NA> <NA>
+SPEAKER dialogue1 1 183.45 1.93 <NA> <NA> ('spk3', 'fr', 'On peut en parler demain.') <NA> <NA>
+SPEAKER dialogue1 1 185.38 2.02 <NA> <NA> ('spk2', 'en', "Let's not rush this.") <NA> <NA>
+SPEAKER dialogue1 1 187.40 1.15 <NA> <NA> ('spk2', 'en', 'Sure.') <NA> <NA>
+SPEAKER dialogue1 1 188.55 13.90 <NA> <NA> ('spk2', 'en', 'To be honest, I don’t think launching the new feature next week is a good idea. The team’s already overwhelmed, and we haven’t finished the regression testing. Let’s take a step back and reassess what really needs to be done before going live.') <NA> <NA>
+SPEAKER dialogue1 1 202.45 2.98 <NA> <NA> ('spk1', 'fr', "Bonjour, comment vas-tu aujourd'hui ?") <NA> <NA>
+SPEAKER dialogue1 1 205.43 1.98 <NA> <NA> ('spk2', 'en', 'Thanks for the update.') <NA> <NA>
+SPEAKER dialogue1 1 207.40 1.88 <NA> <NA> ('spk3', 'fr', 'Fais-moi signe quand tu es prêt.') <NA> <NA>
+SPEAKER dialogue1 1 209.28 1.60 <NA> <NA> ('spk4', 'en', 'Let’s regroup tomorrow.') <NA> <NA>
+SPEAKER dialogue1 1 210.88 2.40 <NA> <NA> ('spk1', 'fr', 'Hmm... ouais, peut-être.') <NA> <NA>
+SPEAKER dialogue1 1 213.28 12.43 <NA> <NA> ('spk4', 'en', "The client feedback was pretty clear on what they expect, and I think we need to revise both the timeline and the resource allocation. I've put together a quick plan to adjust, which I’ll walk you through during the meeting. We really can’t afford another delay.") <NA> <NA>
+SPEAKER dialogue1 1 225.70 2.58 <NA> <NA> ('spk1', 'fr', 'Ça marche, je m’en occupe.') <NA> <NA>
+SPEAKER dialogue1 1 228.28 1.30 <NA> <NA> ('spk2', 'en', 'Uh-huh.') <NA> <NA>
+SPEAKER dialogue1 1 229.58 1.48 <NA> <NA> ('spk3', 'fr', 'Tu crois ?') <NA> <NA>
+SPEAKER dialogue1 1 231.05 1.48 <NA> <NA> ('spk4', 'en', 'Here’s what I think.') <NA> <NA>
